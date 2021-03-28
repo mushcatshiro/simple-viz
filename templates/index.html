@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block css_ %}
+<script src="{{ url_for('static', filename='echarts.min.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+
+<div id="linreg" style="width:600px; height:400px;"></div>
+<div id="simplescatter" style="width:600px; height:400px;"></div>
+<div id="partitionscatter" style="width:600px; height:400px;"></div>
+<div id="regionalcomp" style="width:600px; height:400px;"></div>
+<div id="main" style="width:600px; height:400px;"></div>
+
+{% endblock %}
+
+{% block script_ %}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js" crossorigin="anonymous"></script>
+
+<script type="text/javascript">
+  var data;
+  var myChart = echarts.init(document.getElementById('linreg'));
+  function getData() {
+    var resp;
+    axios.get('/getdata/linreg')
+      .then(response => resp = response)
+      .catch(err => console.error(err))
+    console.log(resp)
+    return resp
+  }
+  data = getData()
+  console.log(data)
+  console.log(data.name)
+
+</script>
+
+{% endblock %}
