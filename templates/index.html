@@ -21,15 +21,38 @@
 <script type="text/javascript">
   var data;
   var myChart = echarts.init(document.getElementById('linreg'));
-  function getData() {
-    var resp;
-    axios.get('/getdata/linreg')
-      .then(response => resp = response)
-      .catch(err => console.error(err))
+  async function getData() {
+    var resp = await axios.get('/getdata/linreg')
+
     console.log(resp)
     return resp
   }
-  data = getData()
+  getData().then(function (resp) {
+    var option = {
+      title: {
+          text: resp.data.name,
+          left: 'center',
+          top: 0
+      },
+      grid: {left: '7%', top: '7%', width: '38%', height: '38%'},
+      tooltip: {
+          formatter: 'Group {a}: ({c})'
+      },
+      xAxis: {gridIndex: 0, min: 0, max: 20},
+      yAxis: {gridIndex: 0, min: 0, max: 20},
+      series:
+          {
+              name: 'I',
+              type: 'scatter',
+              xAxisIndex: 0,
+              yAxisIndex: 0,
+              data: resp.data.data
+          }
+        }
+      }
+    )
+  
+  
   console.log(data)
   console.log(data.name)
 
