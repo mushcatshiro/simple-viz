@@ -20,16 +20,12 @@
 
 <script type="text/javascript">
   var option;
-  var myChart = echarts.init(document.getElementById('linreg'));
+  var mylinregChart = echarts.init(document.getElementById('linreg'));
   async function getData() {
     var resp = await axios.get('/getdata/linreg')
-
-    console.log(resp)
     return resp
   }
   getData().then(function (resp) {
-    console.log(resp.data.name)
-    console.log(resp.data.data)
     option = {
       title: {
           text: resp.data.name,
@@ -50,10 +46,71 @@
               data: resp.data.data
           }
         }
-    myChart.setOption(option);
+    mylinregChart.setOption(option);
   }
 )
+</script>
 
+<script type="text/javascript">
+  var option;
+  var myscatterdateChart = echarts.init(document.getElementById('simplescatterwithdate'));
+  async function getData() {
+    var resp = await axios.get('/getdata/simplescatterwithdate')
+    return resp
+  }
+  getData().then(function (resp) {
+    option = {
+      title: {
+          text: resp.data.name,
+          left: 'center',
+          top: 0
+      },
+      tooltip: {
+          formatter: 'Group {a}: ({c})'
+      },
+      xAxis: {type: 'category', boundaryGap: false, data: resp.data.data_x},
+      yAxis: {type: 'value', boundaryGap: false},
+      series:
+          {
+              name: 'II',
+              type: 'line',
+              data: resp.data.data_y
+          }
+        }
+    myscatterdateChart.setOption(option);
+  }
+)
+</script>
+
+<script type="text/javascript">
+  var option;
+  var mypartitionscatterChart = echarts.init(document.getElementById('partitionscatter'));
+  async function getData() {
+    var resp = await axios.get('/getdata/partitionscatter')
+    return resp
+  }
+  getData().then(function (resp) {
+    option = {
+      title: {
+          text: resp.data.name,
+          left: 'center',
+          top: 0
+      },
+      tooltip: {
+          formatter: 'Group {a}: ({c})'
+      },
+      xAxis: {type: 'category', boundaryGap: false, data: resp.data.data_x},
+      yAxis: {type: 'value', boundaryGap: false},
+      series:
+          {
+              name: 'II',
+              type: 'line',
+              data: resp.data.data_y
+          }
+        }
+    mypartitionscatterChart.setOption(option);
+  }
+)
 </script>
 
 {% endblock %}
