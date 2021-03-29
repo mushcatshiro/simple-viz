@@ -19,7 +19,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js" crossorigin="anonymous"></script>
 
 <script type="text/javascript">
-  var data;
+  var option;
   var myChart = echarts.init(document.getElementById('linreg'));
   async function getData() {
     var resp = await axios.get('/getdata/linreg')
@@ -28,13 +28,14 @@
     return resp
   }
   getData().then(function (resp) {
-    var option = {
+    console.log(resp.data.name)
+    console.log(resp.data.data)
+    option = {
       title: {
           text: resp.data.name,
           left: 'center',
           top: 0
       },
-      grid: {left: '7%', top: '7%', width: '38%', height: '38%'},
       tooltip: {
           formatter: 'Group {a}: ({c})'
       },
@@ -49,12 +50,9 @@
               data: resp.data.data
           }
         }
-      }
-    )
-  
-  
-  console.log(data)
-  console.log(data.name)
+    myChart.setOption(option);
+  }
+)
 
 </script>
 
